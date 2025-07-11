@@ -19,15 +19,14 @@ document.querySelectorAll("[data-header-menu-toggle]").forEach((el) => {
 
 // Mobile Dropdown Functionality
 if (headerNavigation) {
-  headerNavigation
-    .querySelectorAll(".dropdown-button[data-dropdown]")
-    .forEach((el) => {
-      el.addEventListener("click", () => {
-        el.parentNode.classList.toggle("open");
-      });
+  headerNavigation.querySelectorAll("[data-dropdown]").forEach((el) => {
+    el.addEventListener("click", () => {
+      el.parentNode.classList.toggle("open");
     });
+  });
 }
 
+// Desktop Submenu Functionality
 let submenuTimer;
 let activeSubmenu = null;
 
@@ -62,5 +61,43 @@ document.querySelectorAll(".top-level-link").forEach((group) => {
 
     group.addEventListener("mouseenter", showSubmenu);
     group.addEventListener("mouseleave", hideSubmenu);
+  }
+});
+
+// Image Loading Handler
+document.querySelectorAll("[data-image-loading-skeleton]").forEach((img) => {
+  const wrapper = img.closest(".featured-image-wrapper");
+  const placeholder = wrapper?.querySelector(".featured-image-placeholder");
+
+  if (wrapper && placeholder) {
+    // Skip if image has already been loaded
+    if (wrapper.classList.contains("loaded")) {
+      return;
+    }
+
+    // Check if image is already loaded (cached)
+    if (img.complete && img.naturalWidth > 0) {
+      wrapper.classList.add("loaded");
+      placeholder.style.display = "none";
+      return;
+    }
+
+    // Handle successful image load
+    img.addEventListener(
+      "load",
+      () => {
+        if (wrapper.classList.contains("loaded")) {
+          return;
+        }
+
+        wrapper.classList.add("loaded");
+
+        // Just a slight delay for smoother transition
+        setTimeout(() => {
+          placeholder.style.display = "none";
+        }, 500);
+      },
+      { once: true }
+    );
   }
 });

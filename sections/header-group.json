@@ -22,9 +22,7 @@
           }
         }
       },
-      "block_order": [
-        "announcement-bar-0"
-      ],
+      "block_order": ["announcement-bar-0"],
       "settings": {
         "auto_rotate": false,
         "change_slides_speed": 5,
@@ -38,30 +36,23 @@
     "header": {
       "type": "header",
       "blocks": {
-        "featured_menu-1": {
-          "type": "featured_menu",
+        "featured-image-1": {
+          "type": "featured_image",
           "settings": {
-            "menu_slug": "/collections/women",
-            "menu": "clothing",
+            "top_level_menu_item_slug": "/collections/women",
+            "featured_image_url": "/collections/all",
             "featured_menu_links_layout": "list",
-            "featured_menu_mobile_grid_columns": "grid-cols-4",
-            "featured_menu_desktop_grid_columns": "grid-cols-4",
-            "menu_image": "shopify://shop_images/gift_card.png"
+            "featured_image": "shopify://shop_images/gift_card.png",
+            "featured_image_caption": "Caption"
           }
         }
       },
-      "block_order": [
-        "featured_menu-1"
-      ],
+      "block_order": ["featured-image-1"],
       "settings": {
         "menu": "main-menu",
-        "nav_dropdown_menu_style": "full-width",
-        "mega_menu_columns": 1
+        "nav_dropdown_menu_style": "full-width"
       }
     }
   },
-  "order": [
-    "announcement-bar",
-    "header"
-  ]
+  "order": ["announcement-bar", "header"]
 }

@@ -1,11 +1,6 @@
 {{ 'section-header.css' | asset_url | stylesheet_tag }}
 
-<script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
-
-<header
-  id="header"
-  data-id="{{ section.id }}"
->
+<header id="header" data-id="{{ section.id }}">
   <div class="header-container">
     <div class="logo-section">
       <button
@@ -16,100 +11,134 @@
       >
         {{ 'icon-hamburger.svg' | inline_asset_content }}
       </button>
-      {%- if request.page_type == 'index' -%}
-        <h1
-          class="logo-heading"
-        >
-      {%- endif -%}
-      <a href="{{ routes.root_url }}" class="logo-link">
-        {%- if settings.logo != blank %}
-          {%- liquid
-            assign logo_alt = settings.logo.alt | default: shop.name | escape
-            assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio
-          -%}
-          {%- capture sizes -%}
-            (max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px
-          {%- endcapture -%}
-          {%- capture widths -%}
-            {{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}
-          {%- endcapture -%}
 
-          {{
-            settings.logo
-            | image_url: width: 600
-            | image_tag:
-              widths: widths,
-              height: logo_height,
-              width: settings.logo_width,
-              alt: logo_alt,
-              sizes: sizes,
-              preload: true
-          }}
-        {%- else -%}
-          <span class="logo-fallback">{{ shop.name }}</span>
+      {%- if section.settings.logo_position != 'middle-center' -%}
+        {%- if request.page_type == 'index' -%}
+          <h1 class="header__heading">
         {%- endif -%}
-      </a>
-      {%- if request.page_type == 'index' -%}
-        </h1>
+        <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+          {%- if settings.logo != blank -%}
+            <div class="header__heading-logo-wrapper">
+              {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+              {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+              {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+              {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+              {{
+                settings.logo
+                | image_url: width: 600
+                | image_tag:
+                  class: 'header__heading-logo motion-reduce',
+                  widths: widths,
+                  height: logo_height,
+                  width: settings.logo_width,
+                  alt: logo_alt,
+                  sizes: sizes,
+                  preload: true
+              }}
+            </div>
+          {%- else -%}
+            <span class="h2">{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+        {%- if request.page_type == 'index' -%}
+          </h1>
+        {%- endif -%}
       {%- endif -%}
     </div>
 
-    {%- if section.settings.menu != blank -%}
-      {% render 'header-menu' } %}
-    {%- endif -%}
+    {%- liquid
+      if section.settings.menu != blank
+        if section.settings.menu_type_desktop == 'dropdown'
+          render 'header-dropdown-menu'
+        elsif section.settings.menu_type_desktop != 'drawer'
+          render 'header-menu'
+        endif
+      endif
+    %}
 
-    <ul
-      class="header-top-level-ul"
-    >
-      <li>
-        <button
-          aria-label="Search {{ shop.name }}"
-          data-search-toggle
-          id="header-search"
-          class="header-button"
-        >
-          {{ 'icon-search.svg' | inline_asset_content }}
-        </button>
-      </li>
-      <li class="cart-icon-update">
-        {% capture header_cart_icon %}
-          {{ 'icon-cart.svg' | inline_asset_content }}
-          <span class="sr-only">{{ 'templates.cart.cart' | t }}</span>
-
-          {%- if cart != empty -%}
-            <div class="cart-count">
-              {%- if cart.item_count < 100 -%}
-                <span aria-hidden="true">{{ cart.item_count }}</span>
-              {%- endif -%}
-              <span class="sr-only">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-            </div>
-          {%- endif -%}
-        {% endcapture %}
-        {% if request.page_type == 'cart' %}
-          <span
-            class="cart-icon"
-          >
-            {{ header_cart_icon }}
-          </span>
-        {% else %}
-          {% if settings.cart_type == 'drawer' %}
-            <button data-cart-toggle id="header-cart" class="cart-icon">
-              {{ header_cart_icon }}
-            </button>
-          {% endif %}
-          {% if request.page_type == 'cart' or settings.cart_type != 'drawer' %}
-            <a
-              href="{{ routes.cart_url }}"
-              class="cart-icon"
-            >
-              {{ header_cart_icon }}
-            </a>
-          {% endif %}
+    <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
+      <div class="desktop-localization-wrapper">
+        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+          <localization-form class="small-hide medium-hide" data-prevent-hide>
+            {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
         {% endif %}
-      </li>
-    </ul>
+
+        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+          <localization-form class="small-hide medium-hide" data-prevent-hide>
+            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+      </div>
+      {% render 'header-search', input_id: 'Search-In-Modal' %}
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a
+          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+          class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}"
+          rel="nofollow"
+        >
+          {%- if section.settings.enable_customer_avatar -%}
+            <account-icon>
+              {%- if customer and customer.has_avatar? -%}
+                {{ customer | avatar }}
+              {%- else -%}
+                <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+              {%- endif -%}
+            </account-icon>
+          {%- else -%}
+            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+          {%- endif -%}
+          <span class="visually-hidden">
+            {%- liquid
+              if customer
+                echo 'customer.account_fallback' | t
+              else
+                echo 'customer.log_in' | t
+              endif
+            -%}
+          </span>
+        </a>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+        {% if cart == empty %}
+          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+        {% else %}
+          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+        {% endif %}
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble">
+            {%- if cart.item_count < 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+    </div>
   </div>
 </header>
+
+<script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
@@ -149,106 +178,33 @@
           "label": "Auto"
         }
       ]
-    },
-    {
-      "type": "range",
-      "id": "mega_menu_columns",
-      "label": "Dropdown Menu Columns",
-      "info": "Number of horizontal columns within each dropdown menu. Note that this setting includes any feature blocks added to the dropdown menu.",
-      "min": 1,
-      "max": 6,
-      "default": 1
     }
   ],
   "blocks": [
     {
-      "type": "featured_menu",
-      "name": "Featured Menu",
+      "type": "featured_image",
+      "name": "Featured Image",
       "settings": [
         {
           "type": "text",
           "label": "Top Level Menu Slug",
-          "id": "menu_slug",
-          "info": "Enter the slug of the top level menu item that you would like to add the featured menu to. [How to find the slug](https://thearriveplatform.atlassian.net/wiki/x/AYBgE)"
+          "id": "top_level_menu_item_slug",
+          "info": "Enter the slug of the top level menu item that you would like to add the featured image to. For example, '/collections/women'"
         },
         {
-          "type": "link_list",
-          "label": "Menu",
-          "id": "menu",
-          "info": "The featured menu will support menus up to 2 levels deep."
-        },
-        {
-          "type": "select",
-          "id": "featured_menu_links_layout",
-          "label": "Menu Links Layout",
-          "info": "Displays the menu links in a specific layout. This setting applies only to links after the first link within the featured menu.",
-          "default": "list",
-          "options": [
-            {
-              "value": "list",
-              "label": "List"
-            },
-            {
-              "value": "grid",
-              "label": "Grid"
-            }
-          ]
-        },
-        {
-          "type": "select",
-          "id": "featured_menu_mobile_grid_columns",
-          "label": "Menu Mobile Grid Columns",
-          "info": "Determines the number of columns used for the menu links 'Grid' layout on mobile. This setting applies only when the 'Menu Style' is set to 'Grid'.",
-          "default": "grid-cols-4",
-          "options": [
-            {
-              "value": "grid-cols-1",
-              "label": "1 Column"
-            },
-            {
-              "value": "grid-cols-2",
-              "label": "2 Columns"
-            },
-            {
-              "value": "grid-cols-3",
-              "label": "3 Columns"
-            },
-            {
-              "value": "grid-cols-4",
-              "label": "4 Columns"
-            }
-          ]
-        },
-        {
-          "type": "select",
-          "id": "featured_menu_desktop_grid_columns",
-          "label": "Menu Desktop Grid Columns",
-          "info": "Determines the number of columns used for the menu links 'Grid' layout on desktop. This setting applies only when the 'Menu Style' is set to 'Grid'.",
-          "default": "grid-cols-4",
-          "options": [
-            {
-              "value": "grid-cols-1",
-              "label": "1 Column"
-            },
-            {
-              "value": "grid-cols-2",
-              "label": "2 Columns"
-            },
-            {
-              "value": "grid-cols-3",
-              "label": "3 Columns"
-            },
-            {
-              "value": "grid-cols-4",
-              "label": "4 Columns"
-            }
-          ]
+          "type": "url",
+          "label": "Featured Image URL",
+          "id": "featured_image_url"
         },
         {
           "type": "image_picker",
-          "label": "Menu Image",
-          "id": "menu_image",
-          "info": "The image will be displayed in pair with the first link in the featured menu."
+          "label": "Featured Image",
+          "id": "featured_image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "featured_image_caption",
+          "label": "Featured Image Caption"
         }
       ]
     }
