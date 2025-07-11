@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Header",
   "type": "header",
@@ -7,10 +16,15 @@
       "blocks": {
         "announcement-bar-0": {
           "type": "announcement",
-          "settings": { "text": "Welcome to our store", "link": "" }
+          "settings": {
+            "text": "Welcome to our store",
+            "link": ""
+          }
         }
       },
-      "block_order": ["announcement-bar-0"],
+      "block_order": [
+        "announcement-bar-0"
+      ],
       "settings": {
         "auto_rotate": false,
         "change_slides_speed": 5,
@@ -23,20 +37,31 @@
     },
     "header": {
       "type": "header",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "menu": "main-menu"
-      },
       "blocks": {
         "featured_menu-1": {
           "type": "featured_menu",
           "settings": {
-            "menu_slug": "/collections/women"
+            "menu_slug": "/collections/women",
+            "menu": "clothing",
+            "featured_menu_links_layout": "list",
+            "featured_menu_mobile_grid_columns": "grid-cols-4",
+            "featured_menu_desktop_grid_columns": "grid-cols-4",
+            "menu_image": "shopify://shop_images/gift_card.png"
           }
         }
       },
-      "block_order": ["featured_menu-1"]
+      "block_order": [
+        "featured_menu-1"
+      ],
+      "settings": {
+        "menu": "main-menu",
+        "nav_dropdown_menu_style": "full-width",
+        "mega_menu_columns": 1
+      }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }
