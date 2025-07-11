@@ -26,7 +26,16 @@
       "settings": {
         "color_scheme": "scheme-1",
         "menu": "main-menu"
-      }
+      },
+      "blocks": {
+        "featured_menu-1": {
+          "type": "featured_menu",
+          "settings": {
+            "menu_slug": "/collections/women"
+          }
+        }
+      },
+      "block_order": ["featured_menu-1"]
     }
   },
   "order": ["announcement-bar", "header"]
