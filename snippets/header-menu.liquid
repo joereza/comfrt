@@ -1,0 +1,175 @@
+{{ 'section-header-menu.css' | asset_url | stylesheet_tag }}
+
+<style>
+  @media (min-width: 1024px) {
+    .submenu-container {
+      grid-template-columns: repeat({{ section.settings.mega_menu_columns }}, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .submenu-list {
+      grid-column: span {{ section.settings.mega_menu_columns | minus: featured_section_count }};
+      grid-template-columns: repeat({{ section.settings.mega_menu_columns | minus: featured_section_count }}, minmax(0, 1fr));
+    }
+  }
+
+  .featured-menu-container {
+    grid-column: span {{ featured_section_count }};
+    grid-template-columns: repeat({{ featured_section_count }}, minmax(0, 1fr));
+  }
+</style>
+
+<nav
+  id="{{- section.settings.menu.title | handleize -}}"
+  class="header-nav"
+  data-header-navigation
+>
+  <div class="nav-close-container">
+    <button
+      data-header-menu-toggle
+      aria-label="Close navigation menu"
+      class="nav-close-button"
+    >
+      {{ 'icon-close.svg' | inline_asset_content }}
+    </button>
+  </div>
+
+  <ul class="nav-list">
+    {%- for link in section.settings.menu.links -%}
+      {%- liquid
+        assign featured_section_count = 0
+        for block in section.blocks
+          if block.settings.menu_slug == link.url
+            assign featured_section_count = featured_section_count | plus: 1
+          endif
+        endfor
+      -%}
+      <li class="nav-item group top-level-link">
+        <a
+          href="{{ link.url }}"
+          class="nav-link {% if link.links != blank %}has-dropdown{% endif %} {% if link.active %}active{% endif %}"
+        >
+          {{- link.title -}}
+        </a>
+
+        {%- if link.links != blank -%}
+          <button
+            data-dropdown
+            class="dropdown-button"
+          >
+            {{- link.title -}}
+            <span class="dropdown-caret">
+              {{ 'icon-caret.svg' | inline_asset_content }}
+            </span>
+          </button>
+        {%- endif -%}
+
+        {%- if link.links != blank or featured_section_count > 0 -%}
+          <div class="desktop-submenu {% if section.settings.nav_dropdown_menu_style == 'full-width' %}full-width{% else %}auto-width{% endif %}">
+            <div class="submenu-container">
+              {%- if link.links != blank -%}
+                <ul class="submenu-list">
+                  {%- for level_2_link in link.links -%}
+                    <li class="submenu-item">
+                      <a
+                        href="{{ level_2_link.url }}"
+                        class="submenu-link"
+                      >
+                        {{- level_2_link.title -}}
+                      </a>
+                      {%- if level_2_link.links -%}
+                        <ul class="submenu-sublist mobile">
+                          {%- for level_3_link in level_2_link.links -%}
+                            <li>
+                              <a
+                                class="submenu-sublink"
+                                href="{{ level_3_link.url }}"
+                              >
+                                {{- level_3_link.title -}}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {% if featured_section_count > 0 %}
+                <ul
+                  class="featured-menu-container"
+                  style=""
+                >
+                  {%- for block in section.blocks -%}
+                    {%- assign featured_menu_links_layout = block.settings.featured_menu_links_layout -%}
+                    {% case block.type %}
+                      {% when 'featured_menu' %}
+                        {%- if block.settings.menu_slug == link.url -%}
+                          <li class="featured-menu-item">
+                            <ul class="featured-menu-list">
+                              {%- for link in block.settings.menu.links -%}
+                                <li>
+                                  <a
+                                    class="featured-menu-link {% if forloop.first %}block{%- endif %}"
+                                    href="{{ link.url }}"
+                                  >
+                                    {% if block.settings.menu_image %}
+                                      {%- if forloop.first -%}
+                                        <img
+                                          class="featured-menu-image"
+                                          srcset="
+                                            {%- if block.settings.menu_image.width >= 165 -%}{{ block.settings.menu_image | image_url: width: 165 }} 165w,{%- endif -%}
+                                            {%- if block.settings.menu_image.width >= 330 -%}{{ block.settings.menu_image | image_url: width: 330 }} 330w,{%- endif -%}
+                                            {%- if block.settings.menu_image.width >= 535 -%}{{ block.settings.menu_image | image_url: width: 535 }} 535w,{%- endif -%}
+                                            {{ block.settings.menu_image | image_url }} {{ block.settings.menu_image.width }}w
+                                          "
+                                          src="{{ block.settings.menu_image | image_url: width: 535 }}"
+                                          alt="{{ block.settings.menu_image.alt | escape }}"
+                                          height="{{ block.settings.menu_image.height }}"
+                                          width="{{ block.settings.menu_image.width }}"
+                                          loading="lazy"
+                                        >
+                                      {% endif %}
+                                    {%- endif -%}
+                                    {{- link.title -}}
+                                  </a>
+                                  {%- if link.links != blank -%}
+                                    <ul
+                                      class="featured-submenu {% if featured_menu_links_layout == 'grid' %}grid {{ block.settings.featured_menu_mobile_grid_columns | replace: 'grid-cols-', 'cols-' }} lg-{{ block.settings.featured_menu_desktop_grid_columns | replace: 'grid-cols-', 'cols-' }}{% else %}list{% endif %}"
+                                    >
+                                      {%- for sub_link in link.links -%}
+                                        <li
+                                          class="featured-submenu-item{% if featured_menu_links_layout == 'grid' %} grid-item{% endif %}"
+                                        >
+                                          <a
+                                            class="featured-submenu-link{% if featured_menu_links_layout == 'grid' %} grid-link{% endif %}"
+                                            href="{{ sub_link.url }}"
+                                          >
+                                            {{- sub_link.title -}}
+                                          </a>
+                                        </li>
+                                      {%- endfor -%}
+                                    </ul>
+                                  {%- endif -%}
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          </li>
+                        {% endif %}
+                    {%- endcase -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+<div
+  data-header-menu-overlay
+  data-header-menu-toggle
+  class="menu-overlay"
+></div>
