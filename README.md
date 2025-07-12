@@ -217,6 +217,9 @@ if (img.complete && img.naturalWidth > 0) {
      - Featured Image upload
      - Image caption text
      - Image URL
+    
+4. ** Merchant Control
+    - <img width="2504" height="580" alt="Screenshot 2025-07-11 at 9 14 29 PM" src="https://github.com/user-attachments/assets/1e8d0934-84d5-40db-95ac-8ce6363525be" />
 
 ## 🎨 Design & UX Assumptions
 
