@@ -46,7 +46,7 @@
         {%- endif -%}
 
         {%- if link.links != blank or featured_section_count > 0 -%}
-          <div class="desktop-submenu {% if section.settings.nav_dropdown_menu_style == 'full-width' %}full-width{% else %}auto-width{% endif %}">
+          <div class="desktop-submenu full-width">
             <div class="submenu-container">
               {%- if link.links != blank -%}
                 <ul class="submenu-list">
