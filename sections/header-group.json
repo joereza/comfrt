@@ -44,12 +44,32 @@
             "top_level_menu_item_slug": "/collections/women",
             "featured_image_url": "shopify://collections/women",
             "featured_image": "shopify://shop_images/gift_card.png",
-            "featured_image_caption": "Caption"
+            "featured_image_caption": "Caption 1"
+          }
+        },
+        "featured_image_K68tiP": {
+          "type": "featured_image",
+          "settings": {
+            "top_level_menu_item_slug": "/collections/women",
+            "featured_image_url": "shopify://collections/men",
+            "featured_image": "shopify://shop_images/wax-special.png",
+            "featured_image_caption": "Caption 2"
+          }
+        },
+        "featured_image_Anw7Gg": {
+          "type": "featured_image",
+          "settings": {
+            "top_level_menu_item_slug": "/collections/women",
+            "featured_image_url": "shopify://collections/women",
+            "featured_image": "shopify://shop_images/snowboard_wax.png",
+            "featured_image_caption": "Caption 3"
           }
         }
       },
       "block_order": [
-        "featured_image_bTM6Gn"
+        "featured_image_bTM6Gn",
+        "featured_image_K68tiP",
+        "featured_image_Anw7Gg"
       ],
       "settings": {
         "menu": "main-menu",
