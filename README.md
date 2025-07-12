@@ -213,7 +213,7 @@ if (img.complete && img.naturalWidth > 0) {
    - Navigate to **Customize Theme** → **Header** section via Shopify Theme Customizer
    - Add **Featured Image** blocks for each menu item
    - **Feature Image Block Configuration:**
-     - Top Level Menu Slug for proper placement (e.g., `/collections/women`)
+     - Enter the slug of the top level menu item that you would like to add the featured image block to. (e.g., `/collections/women`)
      - Featured Image upload
      - Image caption text
      - Image URL
