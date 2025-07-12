@@ -63,6 +63,10 @@
   border: 0;
 }
 
-.nav-open .top-level-link.open .desktop-submenu {
+.top-level-link.open .desktop-submenu {
   display: block;
+}
+
+details[open] > .search-modal {
+  z-index: 50;
 }
