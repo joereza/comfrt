@@ -220,7 +220,10 @@ if (img.complete && img.naturalWidth > 0) {
     
 4. ** Merchant Control
     - <img width="2504" height="580" alt="Screenshot 2025-07-11 at 9 14 29 PM" src="https://github.com/user-attachments/assets/1e8d0934-84d5-40db-95ac-8ce6363525be" />
-    - <img width="653" height="1227" alt="Screenshot 2025-07-12 at 12 08 08 AM" src="https://github.com/user-attachments/assets/ce6f5596-965b-4189-9363-1906516216d5" />
+    - <img width="653" height="981" alt="Screenshot 2025-07-12 at 12 09 14 AM" src="https://github.com/user-attachments/assets/3a559bb3-2797-4bd8-a728-9ee14a05713b" />
+    - <img width="653" height="456" alt="Screenshot 2025-07-12 at 12 09 28 AM" src="https://github.com/user-attachments/assets/441cad6f-e982-42a5-829d-e19e7fa3b990" />
+
+
 
 
 ## 🎨 Design & UX Assumptions
