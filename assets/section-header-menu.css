@@ -369,12 +369,12 @@
   background-color: #000;
   opacity: 0;
   transition: opacity 0.3s;
-  display: block;
 }
 
 .menu-overlay.overlay-visible {
   visibility: visible;
   opacity: 0.5;
+  display: block;
 }
 
 @media (min-width: 1024px) {
