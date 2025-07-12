@@ -9,7 +9,7 @@ A responsive mega menu implementation for the Shopify Dawn theme featuring linke
 **View the implementation:** [https://quickstart-744c0e92.myshopify.com/](https://quickstart-744c0e92.myshopify.com/)  
 **Password:** `comfrt`
 
-Experience the header and mega menu system in action, including the image loading skeletons, smooth hover states, and responsive navigation.
+Experience the header and mega menu system in action.
 
 ## 📋 Assessment Details
 
@@ -106,7 +106,7 @@ assets/header.js               # Interactive functionality
 
 ### Accessibility Features
 
-- **Semantic HTML**: Proper heading hierarchy and proper usage of HTML (ul, li, sections, etc) for improved accessibiluty and developer readability
+- **Semantic HTML**: Proper usage of HTML (ul, li, p, sections, etc) for improved accessibility and developer readability
 - **Focus Management**: Logical tab order and clear focus indicators
 - **Touch Optimization**: No hover dependencies on mobile devices
 
