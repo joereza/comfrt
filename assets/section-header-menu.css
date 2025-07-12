@@ -286,6 +286,7 @@
 .featured-image-link {
   text-decoration: none;
   display: block;
+  color: black;
 }
 
 .featured-image-link:hover {
