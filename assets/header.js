@@ -21,7 +21,20 @@ document.querySelectorAll("[data-header-menu-toggle]").forEach((el) => {
 if (headerNavigation) {
   headerNavigation.querySelectorAll("[data-dropdown]").forEach((el) => {
     el.addEventListener("click", () => {
-      el.parentNode.classList.toggle("open");
+      const currentParent = el.parentNode;
+      const isCurrentlyOpen = currentParent.classList.contains("open");
+
+      // Close all other dropdowns first
+      headerNavigation
+        .querySelectorAll(".nav-item.open")
+        .forEach((openItem) => {
+          if (openItem !== currentParent) {
+            openItem.classList.remove("open");
+          }
+        });
+
+      // Toggle current dropdown
+      currentParent.classList.toggle("open");
     });
   });
 }
