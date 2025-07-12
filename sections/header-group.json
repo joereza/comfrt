@@ -22,7 +22,9 @@
           }
         }
       },
-      "block_order": ["announcement-bar-0"],
+      "block_order": [
+        "announcement-bar-0"
+      ],
       "settings": {
         "auto_rotate": false,
         "change_slides_speed": 5,
@@ -36,23 +38,27 @@
     "header": {
       "type": "header",
       "blocks": {
-        "featured-image-1": {
+        "featured_image_bTM6Gn": {
           "type": "featured_image",
           "settings": {
             "top_level_menu_item_slug": "/collections/women",
-            "featured_image_url": "/collections/all",
-            "featured_menu_links_layout": "list",
+            "featured_image_url": "shopify://collections/women",
             "featured_image": "shopify://shop_images/gift_card.png",
             "featured_image_caption": "Caption"
           }
         }
       },
-      "block_order": ["featured-image-1"],
+      "block_order": [
+        "featured_image_bTM6Gn"
+      ],
       "settings": {
         "menu": "main-menu",
         "nav_dropdown_menu_style": "full-width"
       }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }
