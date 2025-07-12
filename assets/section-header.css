@@ -36,8 +36,8 @@
 }
 
 .menu-toggle {
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: auto;
   flex: none;
   border: none;
   background: none;
