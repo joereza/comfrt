@@ -35,7 +35,6 @@ This mega menu implementation addresses all technical requirements with the foll
 - **CMS Strategy**: Theme schema settings for easy merchant control
 - **File Structure**: Modular sections, snippets, and assets
 - **Performance**: Cache-aware image loading with skeleton placeholders
-- **Accessibility**: WCAG 2.1 AA compliance with keyboard navigation
 - **Responsiveness**: Mobile-first design with touch-optimized interactions
 
 ### 🖼️ **Key Features**
@@ -79,8 +78,6 @@ I implemented merchant control through Shopify's section schema rather than meta
 - **Version Control**: Settings are stored in theme files, enabling proper versioning
 - **Flexibility**: Easy to extend with additional image properties (captions, links, etc.)
 
-**Production Alternative**: For enterprise stores with complex navigation structures, metafields would provide better scalability and could be managed programmatically via Admin API.
-
 ### File Structure & Architecture
 
 ```
@@ -109,8 +106,7 @@ assets/header.js               # Interactive functionality
 
 ### Accessibility Features
 
-- **WCAG 2.1 AA Compliance**: Full keyboard navigation and screen reader support
-- **Semantic HTML**: Proper heading hierarchy and landmark roles
+- **Semantic HTML**: Proper heading hierarchy and proper usage of HTML (ul, li, sections, etc) for improved accessibiluty and developer readability
 - **Focus Management**: Logical tab order and clear focus indicators
 - **Touch Optimization**: No hover dependencies on mobile devices
 
@@ -212,22 +208,15 @@ if (img.complete && img.naturalWidth > 0) {
 
    - Replace existing header section with new implementation
 
-3. **Configure Navigation:**
-   - Set up main menu in Shopify Admin (Navigation)
-   - Add featured images via Theme Customizer
-   - Configure menu slugs to match navigation URLs
-
-### Merchant Configuration
-
-**Theme Customizer Settings:**
-
-- Navigate to **Customize Theme** → **Header** section
-- Add **Featured Image** blocks for each menu item
-- Configure:
-  - Top Level Menu Slug (e.g., `/collections/women`)
-  - Featured Image upload
-  - Image caption text
-  - Destination URL
+3. **Easy Navigation Setup & Maintainability:**
+   - Set up main menu and its submenu lists in Shopify Admin (**Content > Menus**)
+   - Navigate to **Customize Theme** → **Header** section via Shopify Theme Customizer
+   - Add **Featured Image** blocks for each menu item
+   - **Feature Image Block Configuration:**
+     - Top Level Menu Slug for proper placement (e.g., `/collections/women`)
+     - Featured Image upload
+     - Image caption text
+     - Image URL
 
 ## 🎨 Design & UX Assumptions
 
